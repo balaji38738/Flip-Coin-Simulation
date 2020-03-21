@@ -9,11 +9,11 @@ echo "Flip Coin Simulation"
 HEAD=0
 TAIL=1
 
-declare -A singletCoinComb	doubletCoinComb tripletCoinComb
+declare -A singletCoinComb doubletCoinComb tripletCoinComb
 
 #Function to generate singlet coin combination
 function generateSingletComb() {
-	singletCoinComb=( ["H"]=0 ["T"]=0 )
+   singletCoinComb=( ["H"]=0 ["T"]=0 )
    maxFlips=$1
    for (( flip=0; flip<maxFlips; flip++ ))
    do
@@ -21,9 +21,9 @@ function generateSingletComb() {
       case $face in
       	$HEAD) combination="H";;
       	$TAIL) combination="T";;
-   	esac
-	((singletCoinComb[$combination]+=1))
-	done
+   	  esac
+	  ((singletCoinComb[$combination]+=1))
+   done
 }
 
 function findSingletWinComb() {
@@ -52,17 +52,17 @@ function generateDoubletComb() {
 	doubletCoinComb=( ["HH"]=0 ["HT"]=0 ["TT"]=0 ["TH"]=0 )
 	maxFlips=$1
 	for (( flip=0; flip<maxFlips; flip++ ))
-   do
+    do
 		combination=""
 		for (( coin=1; coin<=2; coin++ ))
 		do
-      	face=$(( RANDOM % 2 ))
-      	case $face in
+      		face=$(( RANDOM % 2 ))
+      	    case $face in
 				$HEAD) combination="H$combination";;
 				$TAIL) combination="T$combination";;
-   		esac
+   			esac
 		done
-   	((doubletCoinComb[$combination]+=1))
+   		((doubletCoinComb[$combination]+=1))
 	done
 }
 
@@ -133,22 +133,22 @@ function calcPercent() {
 	case $coins in
 		1)
 			for comb in "${!singletCoinComb[@]}"
-   		do
-      		singletCoinComb[$comb]=`echo "scale=3; ${singletCoinComb[$comb]} * 100 / $maxFlips" | bc`
-   		done
+   			do
+      			singletCoinComb[$comb]=`echo "scale=3; ${singletCoinComb[$comb]} * 100 / $maxFlips" | bc`
+   			done
 			;;
 		2)
 			for comb in "${!doubletCoinComb[@]}"
-      	do
-         	doubletCoinComb[$comb]=`echo "scale=3; ${doubletCoinComb[$comb]} * 100 / $maxFlips" | bc`
-      	done
-      	;;
+      		do
+         		doubletCoinComb[$comb]=`echo "scale=3; ${doubletCoinComb[$comb]} * 100 / $maxFlips" | bc`
+      		done
+      		;;
 		3)
 			for comb in "${!tripletCoinComb[@]}"
-         do
-            tripletCoinComb[$comb]=`echo "scale=3; ${tripletCoinComb[$comb]} * 100 / $maxFlips" | bc`
-         done
-         ;;
+         	do
+            	tripletCoinComb[$comb]=`echo "scale=3; ${tripletCoinComb[$comb]} * 100 / $maxFlips" | bc`
+         	done
+         	;;
 	esac
 }
 
