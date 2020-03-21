@@ -24,14 +24,14 @@ function generateSingletComb() {
       $TAIL) combination="T";;
    esac
 	singletCoinComb[$combination]=$(( ${singletCoinComb[$combination]} + 1 ))
-	done
+   done
 }
 
 function calcPercent() {
 	for comb in "${!singletCoinComb[@]}"
-   do
-      singletCoinComb[$comb]=`echo "scale=3; ${singletCoinComb[$comb]} * 100 / $maxFlips" | bc`
-   done
+   	do
+		singletCoinComb[$comb]=`echo "scale=3; ${singletCoinComb[$comb]} * 100 / $maxFlips" | bc`
+	done
 }
 
 generateSingletComb
