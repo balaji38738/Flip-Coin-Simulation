@@ -14,15 +14,15 @@ declare -A singletCoinComb	doubletCoinComb
 #Function to generate singlet coin combination
 function generateSingletComb() {
 	singletCoinComb=( ["H"]=0 ["T"]=0 )
-   maxFlips=$1
-   for (( flip=0; flip<maxFlips; flip++ ))
-   do
+	maxFlips=$1
+	for (( flip=0; flip<maxFlips; flip++ ))
+	do
       face=$(( RANDOM % 2 ))
       case $face in
       	$HEAD) combination="H";;
       	$TAIL) combination="T";;
-   	esac
-	singletCoinComb[$combination]=$(( ${singletCoinComb[$combination]} + 1 ))
+   		esac
+			singletCoinComb[$combination]=$(( ${singletCoinComb[$combination]} + 1 ))
 	done
 }
 
@@ -31,7 +31,7 @@ function generateDoubletComb() {
 	doubletCoinComb=( ["HH"]=0 ["HT"]=0 ["TT"]=0 ["TH"]=0 )
 	maxFlips=$1
 	for (( flip=0; flip<maxFlips; flip++ ))
-   do
+  do
 		combination=""
 		for (( coin=1; coin<=2; coin++ ))
 		do
