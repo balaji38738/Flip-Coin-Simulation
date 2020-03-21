@@ -9,21 +9,21 @@ echo "Flip Coin Simulation"
 HEAD=0
 TAIL=1
 
-declare -A singletCoinComb	doubletCoinComb tripletCoinComb
+declare -A singletCoinComb doubletCoinComb tripletCoinComb
 
 #Function to generate singlet coin combination
 function generateSingletComb() {
 	singletCoinComb=( ["H"]=0 ["T"]=0 )
-   maxFlips=$1
-   for (( flip=0; flip<maxFlips; flip++ ))
-   do
-      face=$(( RANDOM % 2 ))
-      case $face in
-      	$HEAD) combination="H";;
-      	$TAIL) combination="T";;
-   	esac
-	((singletCoinComb[$combination]+=1))
-   done
+	maxFlips=$1
+   	for (( flip=0; flip<maxFlips; flip++ ))
+   	do
+    	face=$(( RANDOM % 2 ))
+    	case $face in
+      		$HEAD) combination="H";;
+      		$TAIL) combination="T";;
+   		esac
+		((singletCoinComb[$combination]+=1))
+   	done
 }
 
 function findSingletWinComb() {
@@ -58,8 +58,8 @@ function generateDoubletComb() {
 		do
       	face=$(( RANDOM % 2 ))
       	case $face in
-				$HEAD) combination="H$combination";;
-				$TAIL) combination="T$combination";;
+			$HEAD) combination="H$combination";;
+			$TAIL) combination="T$combination";;
    		esac
 		done
    	((doubletCoinComb[$combination]+=1))
@@ -133,22 +133,22 @@ function calcPercent() {
 	case $coins in
 		1)
 			for comb in "${!singletCoinComb[@]}"
-   		do
-      		singletCoinComb[$comb]=`echo "scale=3; ${singletCoinComb[$comb]} * 100 / $maxFlips" | bc`
-   		done
+   			do
+      			singletCoinComb[$comb]=`echo "scale=3; ${singletCoinComb[$comb]} * 100 / $maxFlips" | bc`
+   			done
 			;;
 		2)
 			for comb in "${!doubletCoinComb[@]}"
-      	do
-         	doubletCoinComb[$comb]=`echo "scale=3; ${doubletCoinComb[$comb]} * 100 / $maxFlips" | bc`
-      	done
-      	;;
+      		do
+         		doubletCoinComb[$comb]=`echo "scale=3; ${doubletCoinComb[$comb]} * 100 / $maxFlips" | bc`
+      		done
+      		;;
 		3)
 			for comb in "${!tripletCoinComb[@]}"
-         do
-            tripletCoinComb[$comb]=`echo "scale=3; ${tripletCoinComb[$comb]} * 100 / $maxFlips" | bc`
-         done
-         ;;
+         	do
+            	tripletCoinComb[$comb]=`echo "scale=3; ${tripletCoinComb[$comb]} * 100 / $maxFlips" | bc`
+         	done
+         	;;
 	esac
 }
 
@@ -179,15 +179,15 @@ do
 			generateDoubletComb $totalFlips
 			echo "Combinations: ${!doubletCoinComb[@]}"
 			echo "Count: ${doubletCoinComb[@]}"
-         calcPercent $noOfCoins $totalFlips
-         echo "Percentage: ${doubletCoinComb[@]}"
+         	calcPercent $noOfCoins $totalFlips
+         	echo "Percentage: ${doubletCoinComb[@]}"
 			findDoubletWinComb;;
 		3)
 			generateTripletComb $totalFlips
-         echo "Combinations: ${!tripletCoinComb[@]}"
-         echo "Count: ${tripletCoinComb[@]}"
-         calcPercent $noOfCoins $totalFlips
-         echo "Percentage: ${tripletCoinComb[@]}"
+         	echo "Combinations: ${!tripletCoinComb[@]}"
+         	echo "Count: ${tripletCoinComb[@]}"
+         	calcPercent $noOfCoins $totalFlips
+         	echo "Percentage: ${tripletCoinComb[@]}"
 			findTripletWinComb;;
 	esac
 	echo -e "Winning combinations are: ${winningCombs[@]}\n"
