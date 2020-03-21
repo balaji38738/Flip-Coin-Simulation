@@ -9,8 +9,33 @@ echo "Flip Coin Simulation"
 HEAD=0
 TAIL=1
 
-face=$(( RANDOM % 2 ))
-case $face in
-	$HEAD) echo "Head";;
-	$TAIL) echo "Tail";;
-esac
+declare -A singletCoinComb	#Stores singlet coin combinations
+
+singletCoinComb=( ["H"]=0 ["T"]=0 )
+
+#Function to generate singlet coin combination
+function generateSingletComb() {
+   read -p "How many times you want to flip 1 coin: " maxFlips
+   for (( flip=0; flip<maxFlips; flip++ ))
+   do
+      face=$(( RANDOM % 2 ))
+      case $face in
+      $HEAD) combination="H";;
+      $TAIL) combination="T";;
+   esac
+	singletCoinComb[$combination]=$(( ${singletCoinComb[$combination]} + 1 ))
+	done
+}
+
+function calcPercent() {
+	for comb in "${!singletCoinComb[@]}"
+   do
+      singletCoinComb[$comb]=`echo "scale=3; ${singletCoinComb[$comb]} * 100 / $maxFlips" | bc`
+   done
+}
+
+generateSingletComb
+calcPercent
+
+echo "Combinations: ${!singletCoinComb[@]}"
+echo "Percentages: ${singletCoinComb[@]}"
