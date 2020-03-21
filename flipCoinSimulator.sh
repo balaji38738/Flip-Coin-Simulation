@@ -26,6 +26,27 @@ function generateSingletComb() {
 	done
 }
 
+function findSingletWinComb() {
+   maxPercent=0
+   for percent in "${singletCoinComb[@]}"
+   do
+      gt=$(echo "$percent > $maxPercent" | bc -q)
+      if [ $gt -eq 1 ]
+      then
+         maxPercent=$percent
+      fi
+   done
+   winCount=0
+   for comb in "${!singletCoinComb[@]}"
+   do
+      equal=$(echo "${singletCoinComb[$comb]} == $maxPercent" | bc -q)
+      if [ $equal -eq 1 ]
+      then
+         winningCombs[((winCount++))]=$comb
+      fi
+   done
+}
+
 #Function to generate doublet coin combination
 function generateDoubletComb() {
 	doubletCoinComb=( ["HH"]=0 ["HT"]=0 ["TT"]=0 ["TH"]=0 )
@@ -43,6 +64,27 @@ function generateDoubletComb() {
 		done
    	((doubletCoinComb[$combination]+=1))
 	done
+}
+
+function findDoubletWinComb() {
+   maxPercent=0
+   for percent in "${doubletCoinComb[@]}"
+   do
+      gt=$(echo "$percent > $maxPercent" | bc -q)
+      if [ $gt -eq 1 ]
+      then
+         maxPercent=$percent
+      fi
+   done
+   winCount=0
+   for comb in "${!doubletCoinComb[@]}"
+   do
+      equal=$(echo "${doubletCoinComb[$comb]} == $maxPercent" | bc -q)
+      if [ $equal -eq 1 ]
+      then
+         winningCombs[((winCount++))]=$comb
+      fi
+   done
 }
 
 #Function to generate triplet coin combination
@@ -64,6 +106,26 @@ function generateTripletComb() {
    done
 }
 
+function findTripletWinComb() {
+   maxPercent=0
+   for percent in "${tripletCoinComb[@]}"
+   do
+      gt=$(echo "$percent > $maxPercent" | bc -q)
+      if [ $gt -eq 1 ]
+      then
+         maxPercent=$percent
+      fi
+   done
+   winCount=0
+   for comb in "${!tripletCoinComb[@]}"
+   do
+      equal=$(echo "${tripletCoinComb[$comb]} == $maxPercent" | bc -q)
+      if [ $equal -eq 1 ]
+      then
+         winningCombs[((winCount++))]=$comb
+      fi
+   done
+}
 
 function calcPercent() {
 	coins=$1
@@ -111,19 +173,23 @@ do
 			echo "Combinations: ${!singletCoinComb[@]}"
 			echo "Count: ${singletCoinComb[@]}"
 			calcPercent $noOfCoins $totalFlips
-			echo "Percentage: ${singletCoinComb[@]}";;
+			echo "Percentage: ${singletCoinComb[@]}"
+			findSingletWinComb;;
       2)
 			generateDoubletComb $totalFlips
 			echo "Combinations: ${!doubletCoinComb[@]}"
 			echo "Count: ${doubletCoinComb[@]}"
          calcPercent $noOfCoins $totalFlips
-         echo "Percentage: ${doubletCoinComb[@]}";;
+         echo "Percentage: ${doubletCoinComb[@]}"
+			findDoubletWinComb;;
 		3)
 			generateTripletComb $totalFlips
          echo "Combinations: ${!tripletCoinComb[@]}"
          echo "Count: ${tripletCoinComb[@]}"
          calcPercent $noOfCoins $totalFlips
-         echo "Percentage: ${tripletCoinComb[@]}";;
+         echo "Percentage: ${tripletCoinComb[@]}"
+			findTripletWinComb;;
 	esac
+	echo -e "Winning combinations are: ${winningCombs[@]}\n"
 	read -p "Do you want to continue ?: " play
 done
