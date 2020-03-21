@@ -179,15 +179,15 @@ do
 			generateDoubletComb $totalFlips
 			echo "Combinations: ${!doubletCoinComb[@]}"
 			echo "Count: ${doubletCoinComb[@]}"
-         calcPercent $noOfCoins $totalFlips
-         echo "Percentage: ${doubletCoinComb[@]}"
+         	calcPercent $noOfCoins $totalFlips
+         	echo "Percentage: ${doubletCoinComb[@]}"
 			findDoubletWinComb;;
 		3)
 			generateTripletComb $totalFlips
-         echo "Combinations: ${!tripletCoinComb[@]}"
-         echo "Count: ${tripletCoinComb[@]}"
-         calcPercent $noOfCoins $totalFlips
-         echo "Percentage: ${tripletCoinComb[@]}"
+         	echo "Combinations: ${!tripletCoinComb[@]}"
+         	echo "Count: ${tripletCoinComb[@]}"
+         	calcPercent $noOfCoins $totalFlips
+         	echo "Percentage: ${tripletCoinComb[@]}"
 			findTripletWinComb;;
 	esac
 	echo -e "Winning combinations are: ${winningCombs[@]}\n"
