@@ -11,6 +11,6 @@ TAIL=1
 
 face=$(( RANDOM % 2 ))
 case $face in
-	0)	echo "Head";;
-	1) echo "Tail";;
+	$HEAD) echo "Head";;
+	$TAIL) echo "Tail";;
 esac
