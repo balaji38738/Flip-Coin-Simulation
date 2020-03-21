@@ -23,7 +23,7 @@ function generateSingletComb() {
       	$TAIL) combination="T";;
    	esac
 	((singletCoinComb[$combination]+=1))
-	done
+   done
 }
 
 function findSingletWinComb() {
@@ -52,7 +52,7 @@ function generateDoubletComb() {
 	doubletCoinComb=( ["HH"]=0 ["HT"]=0 ["TT"]=0 ["TH"]=0 )
 	maxFlips=$1
 	for (( flip=0; flip<maxFlips; flip++ ))
-   do
+   	do
 		combination=""
 		for (( coin=1; coin<=2; coin++ ))
 		do
